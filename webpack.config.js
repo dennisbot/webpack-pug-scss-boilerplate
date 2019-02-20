@@ -16,7 +16,8 @@ const lintJSOptions = {
   emitWarning: true,
   // Fail only on errors
   failOnWarning: false,
-  failOnError: true,
+  // failOnError: true,
+  failOnError: false,
 
   // Toggle autofix
   fix: true,
@@ -78,10 +79,25 @@ const commonConfig = merge([
         template: './index.pug'
       }),
       new FriendlyErrorsPlugin(),
-      new StylelintPlugin(lintStylesOptions)
+      new StylelintPlugin(lintStylesOptions),
     ],
     module: {
-      noParse: /\.min\.js/
+      noParse: /\.min\.js/,
+      rules: [
+        {
+          test: require.resolve('jquery'),
+          use: [
+            {
+              loader: 'expose-loader',
+              options: '$'
+            },
+            {
+              loader: 'expose-loader',
+              options: 'jQuery'
+            } 
+          ]
+        }
+      ]
     }
   },
   parts.loadPug(),
