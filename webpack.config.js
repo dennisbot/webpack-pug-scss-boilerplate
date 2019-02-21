@@ -224,6 +224,7 @@ const developmentConfig = merge([
 const pages = [
   parts.page({
     title: 'Home',
+    favicon: `${paths.app}/images/favicon.ico`,
     entry: {
       home: `${paths.app}/scripts/index.js`
     },
@@ -231,8 +232,9 @@ const pages = [
     chunks: ['home', 'runtime', 'vendors']
   }),
   parts.page({
-    title: 'About', 
+    title: 'About',
     path: 'about',
+    favicon: `${paths.app}/images/favicon.ico`,
     entry: {
       about: `${paths.app}/scripts/about.js`
     },
