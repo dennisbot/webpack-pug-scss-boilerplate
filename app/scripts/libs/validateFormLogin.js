@@ -1,5 +1,4 @@
-var $ = require('jquery')
-
+/* global $ */
 var validateFormLogin = {
   debug: false,
   errorClass: 'form-error',

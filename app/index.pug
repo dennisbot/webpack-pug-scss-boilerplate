@@ -1,12 +1,7 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(http-equiv="X-UA-Compatible", content="ie=edge")
-    title Document
-  body
-    include includes/header.pug
-    include includes/login.pug
-    div#container
-      span mensaje :D
+extends layout/extends/base
+
+block content
+  include layout/includes/header.pug
+
+block bottom
+  include layout/includes/login.pug

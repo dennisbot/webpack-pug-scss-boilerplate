@@ -3,7 +3,7 @@ const path = require('path')
 const glob = require('glob')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const HtmlPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const StylelintPlugin = require('stylelint-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
@@ -75,11 +75,16 @@ const commonConfig = merge([
       modules: false
     },
     plugins: [
-      new HtmlPlugin({
-        template: './index.pug'
+      new HtmlWebpackPlugin({
+        template: './index.pug',
+        favicon: `${paths.app}/images/favicon.ico`
       }),
       new FriendlyErrorsPlugin(),
       new StylelintPlugin(lintStylesOptions),
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery"
+      }),
     ],
     module: {
       noParse: /\.min\.js/,

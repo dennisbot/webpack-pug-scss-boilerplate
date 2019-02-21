@@ -1,6 +1,6 @@
+/* global $ */
 import '../styles/main.scss'
 import saludar from './libs/test'
-var $ = require('jquery')
 require('jquery-validation')
 require('jquery.alphanum')
 var validateFormLogin = require('./libs/validateFormLogin')
