@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 $(document).ready(function () {
-  $('#container').html('reporte dsafsdf:D')
+  $('#container').html('mensaje dentro de document ready function')
   APP.login.init()
 })
 

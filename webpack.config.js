@@ -75,11 +75,6 @@ const commonConfig = merge([
       modules: false
     },
     plugins: [
-      new HtmlWebpackPlugin({
-        template: './index.pug',
-        title: "Home (not being shown, pending)",
-        favicon: `${paths.app}/images/favicon.ico`
-      }),
       new FriendlyErrorsPlugin(),
       new StylelintPlugin(lintStylesOptions),
       new webpack.ProvidePlugin({
@@ -226,13 +221,33 @@ const developmentConfig = merge([
   parts.loadJS({ include: paths.app })
 ])
 
+const pages = [
+  parts.page({
+    title: 'Home',
+    entry: {
+      home: `${paths.app}/scripts/index.js`
+    },
+    template: path.join(paths.app, 'index.pug'),
+    chunks: ['home', 'runtime', 'vendors']
+  }),
+  parts.page({
+    title: 'About', 
+    path: 'about',
+    entry: {
+      about: `${paths.app}/scripts/about.js`
+    },
+    template: path.join(paths.app, 'about.pug'),
+    chunks: ['about', 'runtime', 'vendors']
+  })
+]
+
 module.exports = env => {
   process.env.NODE_ENV = env
 
   return merge(
     commonConfig,
     env === 'production' ? productionConfig : developmentConfig
-  )
+  , ...pages)
 }
 
 function getPaths ({
