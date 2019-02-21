@@ -77,6 +77,7 @@ const commonConfig = merge([
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.pug',
+        title: "Home (not being shown, pending)",
         favicon: `${paths.app}/images/favicon.ico`
       }),
       new FriendlyErrorsPlugin(),

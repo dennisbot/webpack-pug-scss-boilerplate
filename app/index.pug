@@ -1,7 +1,10 @@
-extends layout/extends/base
+extends themes/home
 
 block content
-  include layout/includes/header.pug
+  include themes/home/header
+
+block login
+  include themes/home/login
 
 block bottom
-  include layout/includes/login.pug
+  p esto es un bottom personalizado
