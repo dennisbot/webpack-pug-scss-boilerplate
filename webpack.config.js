@@ -76,11 +76,7 @@ const commonConfig = merge([
     },
     plugins: [
       new FriendlyErrorsPlugin(),
-      new StylelintPlugin(lintStylesOptions),
-      new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery"
-      }),
+      new StylelintPlugin(lintStylesOptions)
     ],
     module: {
       noParse: /\.min\.js/,

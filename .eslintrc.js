@@ -3,18 +3,13 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
-    node: true,
-    jquery: true
+    node: true
   },
   plugins: ['import', 'promise', 'compat', 'node'],
   extends: [
     'plugin:promise/recommended',
     'standard'
   ],
-  globals: {
-    "$": true,
-    "jQuery": true
-  },
   parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',

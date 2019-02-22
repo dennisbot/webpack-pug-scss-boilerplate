@@ -1,6 +1,11 @@
-@import 'fonts';
+@import 'sass/layout';
 
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: cornflowerblue;
+  color: black;
+}
+
+.miriada {
+  font-family: 'Myriad-pro', sans-serif;
 }
