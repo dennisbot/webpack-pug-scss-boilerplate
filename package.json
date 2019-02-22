@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "analyze": "webpack-bundle-analyzer ./stats.json",
-    "build": "webpack --env production --progress",
+    "build": "webpack --env production --progress --display-modules",
     "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --open --hot --env development\""
   },
   "repository": {

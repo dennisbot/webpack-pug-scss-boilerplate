@@ -15,8 +15,8 @@ const parts = require('./webpack.parts')
 const lintJSOptions = {
   emitWarning: true,
   // Fail only on errors
-  failOnWarning: false,
   // failOnError: true,
+  failOnWarning: false,
   failOnError: false,
 
   // Toggle autofix
@@ -76,7 +76,7 @@ const commonConfig = merge([
     },
     plugins: [
       new FriendlyErrorsPlugin(),
-      new StylelintPlugin(lintStylesOptions)
+      // new StylelintPlugin(lintStylesOptions)
     ],
     module: {
       noParse: /\.min\.js/,
@@ -98,7 +98,7 @@ const commonConfig = merge([
     }
   },
   parts.loadPug(),
-  parts.lintJS({ include: paths.app, options: lintJSOptions }),
+  // parts.lintJS({ include: paths.app, options: lintJSOptions }),
   parts.loadFonts({
     include: paths.app,
     options: {
@@ -225,7 +225,7 @@ const pages = [
       home: `${paths.app}/scripts/index.js`
     },
     template: path.join(paths.app, 'index.pug'),
-    chunks: ['home', 'runtime', 'vendors']
+    chunks: ['runtime', 'vendors', 'home']
   }),
   parts.page({
     title: 'About',
@@ -235,7 +235,7 @@ const pages = [
       about: `${paths.app}/scripts/about.js`
     },
     template: path.join(paths.app, 'about.pug'),
-    chunks: ['about', 'runtime', 'vendors']
+    chunks: ['runtime', 'vendors', 'about']
   })
 ]
 
