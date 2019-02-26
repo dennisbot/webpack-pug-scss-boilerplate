@@ -1,7 +1,10 @@
 extends layout/default
 
+block header
+  include layout/default/page_home/header
+
 block content
-  include layout/default/page_home/content
+  include layout/default/page_home/content_index
 
 block bottom
   p esto es un bottom personalizado para index

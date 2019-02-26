@@ -236,6 +236,26 @@ const pages = [
     },
     template: path.join(paths.app, 'about.pug'),
     chunks: ['runtime', 'vendors', 'about']
+  }),
+  parts.page({
+    title: 'Login',
+    path: 'login',
+    favicon: `${paths.app}/images/favicon.ico`,
+    entry: {
+      login: `${paths.app}/scripts/login.js`
+    },
+    template: path.join(paths.app, 'login.pug'),
+    chunks: ['runtime', 'vendors', 'login']
+  }),
+  parts.page({
+    title: 'Register',
+    path: 'register',
+    favicon: `${paths.app}/images/favicon.ico`,
+    entry: {
+      register: `${paths.app}/scripts/register.js`
+    },
+    template: path.join(paths.app, 'register.pug'),
+    chunks: ['runtime', 'vendors', 'register']
   })
 ]
 
