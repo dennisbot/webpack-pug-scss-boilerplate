@@ -1,10 +1,11 @@
 extends layout/default
 
 block header
-  include layout/default/header
+  include layout/default/includes/header
 
 block content
-  include layout/default/page_about/content
+  include layout/default/includes/mixins
+  include layout/default/includes/about/content
 
 block bottom
   p esto es un bottom personalizado para about

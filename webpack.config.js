@@ -9,6 +9,7 @@ const StylelintPlugin = require('stylelint-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const CleanPlugin = require('clean-webpack-plugin')
 const { StatsWriterPlugin } = require('webpack-stats-plugin')
+const yamlParser = require("require-yml")
 
 const parts = require('./webpack.parts')
 
@@ -47,6 +48,7 @@ const lintJSOptions = {
             js - 'scripts'
 */
 const paths = getPaths()
+const locals = yamlParser(path.join(paths.app, 'data/data.yaml'));
 
 const lintStylesOptions = {
   context: path.resolve(__dirname, `${paths.app}/styles`),
@@ -97,7 +99,11 @@ const commonConfig = merge([
       ]
     }
   },
-  parts.loadPug(),
+  parts.loadPug({
+    data : {
+      data: locals
+    }
+  }),
   // parts.lintJS({ include: paths.app, options: lintJSOptions }),
   parts.loadFonts({
     include: paths.app,
