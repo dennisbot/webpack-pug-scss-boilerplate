@@ -1,7 +1,10 @@
+// required for livereload to work (*.pug files, this is trimmed in prod)
+if (process.env.NODE_ENV !== 'production') {
+  require('../index.pug')
+}
+
 import '../styles/main.scss'
-
 var $ = require('jquery')
-
 /* sintaxis import y require, es mejor usar de un solo tipo */
 import saludar from './libs/test'
 /* esta es la forma sugerida para el startup de root (/) */
