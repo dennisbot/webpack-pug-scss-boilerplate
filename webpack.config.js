@@ -212,7 +212,8 @@ const productionConfig = merge([
 
 const developmentConfig = merge([
   {
-    mode: 'development'
+    mode: 'development',
+    devtool: 'source-maps'
   },
   parts.devServer({
     host: process.env.HOST,
