@@ -242,7 +242,6 @@ const pages = [
       about: `${paths.app}/scripts/about.js`
     },
     template: path.join(paths.app, 'about.pug'),
-    chunks: ['runtime', 'vendors', 'about']
   }),
   parts.page({
     title: 'Login',
@@ -252,7 +251,6 @@ const pages = [
       login: `${paths.app}/scripts/login.js`
     },
     template: path.join(paths.app, 'login.pug'),
-    chunks: ['runtime', 'vendors', 'login']
   }),
   parts.page({
     title: 'Register',
@@ -262,7 +260,6 @@ const pages = [
       register: `${paths.app}/scripts/register.js`
     },
     template: path.join(paths.app, 'register.pug'),
-    chunks: ['runtime', 'vendors', 'register']
   })
 ]
 
