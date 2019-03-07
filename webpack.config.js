@@ -1,17 +1,17 @@
-const path = require('path')
+const path = require("path");
 
-const glob = require('glob')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const StylelintPlugin = require('stylelint-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
-const CleanPlugin = require('clean-webpack-plugin')
-const { StatsWriterPlugin } = require('webpack-stats-plugin')
-const yamlParser = require("require-yml")
+const glob = require("glob");
+const webpack = require("webpack");
+const merge = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const StylelintPlugin = require("stylelint-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
+const CleanPlugin = require("clean-webpack-plugin");
+const { StatsWriterPlugin } = require("webpack-stats-plugin");
+const yamlParser = require("require-yml");
 
-const parts = require('./webpack.parts')
+const parts = require("./webpack.parts");
 
 const lintJSOptions = {
   emitWarning: true,
@@ -24,8 +24,8 @@ const lintJSOptions = {
   fix: true,
   cache: true,
 
-  formatter: require('eslint-friendly-formatter')
-}
+  formatter: require("eslint-friendly-formatter")
+};
 
 /*
   To move all assets to some static folder
@@ -47,17 +47,17 @@ const lintJSOptions = {
            css - 'styles',
             js - 'scripts'
 */
-const paths = getPaths()
-const locals = yamlParser(path.join(paths.app, 'data/data.yaml'));
+const paths = getPaths();
+const locals = yamlParser(path.join(paths.app, "data/data.yaml"));
 
 const lintStylesOptions = {
   context: path.resolve(__dirname, `${paths.app}/styles`),
-  syntax: 'scss',
+  syntax: "scss",
   emitErrors: false
   // fix: true,
-}
+};
 
-const cssPreprocessorLoader = { loader: 'fast-sass-loader' }
+const cssPreprocessorLoader = { loader: "fast-sass-loader" };
 
 const commonConfig = merge([
   {
@@ -72,35 +72,35 @@ const commonConfig = merge([
       publicPath: parts.publicPath
     },
     stats: {
-      warningsFilter: warning => warning.includes('entrypoint size limit'),
+      warningsFilter: warning => warning.includes("entrypoint size limit"),
       children: false,
       modules: false
     },
     plugins: [
-      new FriendlyErrorsPlugin(),
+      new FriendlyErrorsPlugin()
       // new StylelintPlugin(lintStylesOptions)
     ],
     module: {
       noParse: /\.min\.js/,
       rules: [
         {
-          test: require.resolve('jquery'),
+          test: require.resolve("jquery"),
           use: [
             {
-              loader: 'expose-loader',
-              options: '$'
+              loader: "expose-loader",
+              options: "$"
             },
             {
-              loader: 'expose-loader',
-              options: 'jQuery'
-            } 
+              loader: "expose-loader",
+              options: "jQuery"
+            }
           ]
         }
       ]
     }
   },
   parts.loadPug({
-    data : {
+    data: {
       data: locals
     }
   }),
@@ -111,28 +111,28 @@ const commonConfig = merge([
       name: `${paths.fonts}/[name].[hash:8].[ext]`
     }
   })
-])
+]);
 
 const productionConfig = merge([
   {
-    mode: 'production',
+    mode: "production",
     optimization: {
       splitChunks: {
-        chunks: 'all'
+        chunks: "all"
       },
-      runtimeChunk: 'single'
+      runtimeChunk: "single"
     },
     output: {
       chunkFilename: `${paths.js}/[name].[chunkhash:8].js`,
       filename: `${paths.js}/[name].[chunkhash:8].js`
     },
     performance: {
-      hints: 'warning', // 'error' or false are valid too
+      hints: "warning", // 'error' or false are valid too
       maxEntrypointSize: 100000, // in bytes
       maxAssetSize: 450000 // in bytes
     },
     plugins: [
-      new StatsWriterPlugin({ fields: null, filename: '../stats.json' }),
+      new StatsWriterPlugin({ fields: null, filename: "../stats.json" }),
       new webpack.HashedModuleIdsPlugin(),
       new ManifestPlugin(),
       new CleanPlugin(paths.build)
@@ -190,7 +190,7 @@ const productionConfig = merge([
   }),
   parts.purifyCSS({
     paths: glob.sync(`${paths.app}/**/*.+(pug|js)`, { nodir: true }),
-    styleExtensions: ['.css', '.scss']
+    styleExtensions: [".css", ".scss"]
   }),
   parts.minifyCSS({
     options: {
@@ -206,92 +206,103 @@ const productionConfig = merge([
       name: `${paths.images}/[name].[hash:8].[ext]`
     }
   }),
-  // should go after loading images
+  // should go after loading images 
+  // (because this has to be loaded first in building time)
   parts.optimizeImages()
-])
+]);
 
 const developmentConfig = merge([
   {
-    mode: 'development',
-    devtool: 'source-maps'
+    mode: "development",
+    devtool: "source-maps"
   },
   parts.devServer({
     host: process.env.HOST,
     port: process.env.PORT
   }),
   parts.loadCSS({ include: paths.app, use: [cssPreprocessorLoader] }),
-  parts.loadImages({ include: paths.app }),
+  parts.loadImages({
+    include: paths.app,
+    options: {
+      limit: 15000,
+      name: `${paths.images}/[name].[hash:8].[ext]`
+    }
+  }),
   parts.loadJS({ include: paths.app })
-])
+]);
 
 const pages = [
   parts.page({
-    title: 'Home',
+    title: "Home",
     favicon: `${paths.app}/images/favicon.ico`,
     entry: {
       home: `${paths.app}/scripts/index.js`
     },
-    template: path.join(paths.app, 'index.pug'),
-    chunks: ['runtime', 'vendors', 'home']
+    template: path.join(paths.app, "index.pug"),
+    chunks: ["runtime", "vendors", "home"]
   }),
   parts.page({
-    title: 'About',
-    path: 'about',
+    title: "About",
+    path: "about",
     favicon: `${paths.app}/images/favicon.ico`,
     entry: {
       about: `${paths.app}/scripts/about.js`
     },
-    template: path.join(paths.app, 'about.pug'),
+    template: path.join(paths.app, "about.pug")
   }),
   parts.page({
-    title: 'Login',
-    path: 'login',
+    title: "Login",
+    path: "login",
     favicon: `${paths.app}/images/favicon.ico`,
     entry: {
       login: `${paths.app}/scripts/login.js`
     },
-    template: path.join(paths.app, 'login.pug'),
+    template: path.join(paths.app, "login.pug")
   }),
   parts.page({
-    title: 'Register',
-    path: 'register',
+    title: "Register",
+    path: "register",
     favicon: `${paths.app}/images/favicon.ico`,
     entry: {
       register: `${paths.app}/scripts/register.js`
     },
-    template: path.join(paths.app, 'register.pug'),
+    template: path.join(paths.app, "register.pug")
   })
-]
+];
 
 module.exports = env => {
-  process.env.NODE_ENV = env
+  process.env.NODE_ENV = env;
 
   return merge(
     commonConfig,
-    env === 'production' ? productionConfig : developmentConfig
-  , ...pages)
-}
+    env === "production" ? productionConfig : developmentConfig,
+    ...pages
+  );
+};
 
-function getPaths ({
-  sourceDir = 'app',
-  buildDir = 'build',
-  staticDir = '',
-  images = 'images',
-  fonts = 'fonts',
-  js = 'scripts',
-  css = 'styles'
+function getPaths({
+  sourceDir = "app",
+  buildDir = "build",
+  staticDir = "",
+  images = "images",
+  fonts = "fonts",
+  js = "scripts",
+  css = "styles"
 } = {}) {
-  const assets = { images, fonts, js, css }
+  const assets = { images, fonts, js, css };
 
-  return Object.keys(assets).reduce((obj, assetName) => {
-    const assetPath = assets[assetName]
+  return Object.keys(assets).reduce(
+    (obj, assetName) => {
+      const assetPath = assets[assetName];
 
-    obj[assetName] = !staticDir ? assetPath : `${staticDir}/${assetPath}`
+      obj[assetName] = !staticDir ? assetPath : `${staticDir}/${assetPath}`;
 
-    return obj
-  }, {
-    app: path.join(__dirname, sourceDir),
-    build: path.join(__dirname, buildDir),
-    staticDir
-  })
+      return obj;
+    },
+    {
+      app: path.join(__dirname, sourceDir),
+      build: path.join(__dirname, buildDir),
+      staticDir
+    }
+  );
 }
