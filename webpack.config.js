@@ -239,7 +239,7 @@ const pages = [
       home: `${paths.app}/scripts/index.js`
     },
     template: path.join(paths.app, "index.pug"),
-    chunks: ["runtime", "vendors", "home"]
+    chunks: ["home"]
   }),
   parts.page({
     title: "About",
@@ -248,7 +248,8 @@ const pages = [
     entry: {
       about: `${paths.app}/scripts/about.js`
     },
-    template: path.join(paths.app, "about.pug")
+    template: path.join(paths.app, "about.pug"),
+    chunks: ["about"]
   }),
   parts.page({
     title: "Login",
@@ -257,7 +258,8 @@ const pages = [
     entry: {
       login: `${paths.app}/scripts/login.js`
     },
-    template: path.join(paths.app, "login.pug")
+    template: path.join(paths.app, "login.pug"),
+    chunks: ["login"]
   }),
   parts.page({
     title: "Register",
@@ -266,7 +268,8 @@ const pages = [
     entry: {
       register: `${paths.app}/scripts/register.js`
     },
-    template: path.join(paths.app, "register.pug")
+    template: path.join(paths.app, "register.pug"),
+    chunks: ["register"]
   })
 ];
 
